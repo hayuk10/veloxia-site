@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veloxia — Agentes IA para tu negocio</title>
+<meta name="description" content="Cuéntanos tu problema. Te creamos el agente perfecto. Agentes IA implantados, entrenados y supervisados.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--g:#C4922A;--g2:#E8C84A;--g3:#F5E090;--ga:rgba(196,146,42,.13);--k:#040404;--k2:#0A0A0A;--k3:#111;--k4:#181818;--w:#F2EDE3;--w2:rgba(242,237,227,.52);--ease:cubic-bezier(.16,1,.3,1)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--k);color:var(--w);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none}
+a{color:inherit;text-decoration:none}
+button{font-family:'DM Sans',sans-serif;cursor:none}
+#cur{position:fixed;width:6px;height:6px;border-radius:50%;background:var(--g);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference}
+#cur2{position:fixed;width:30px;height:30px;border-radius:50%;border:1px solid rgba(196,146,42,.35);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .13s var(--ease)}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:24px 72px;transition:all .5s var(--ease)}
+nav.s{background:rgba(4,4,4,.93);backdrop-filter:blur(28px);padding:16px 72px;border-bottom:1px solid rgba(196,146,42,.07)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:5px}
+.logo-dot{color:var(--g)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--w2);transition:color .2s;font-weight:500}
+.nav-links a:hover{color:var(--g)}
+.nav-cta{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;padding:12px 28px;background:var(--g);color:var(--k);transition:all .3s}
+.nav-cta:hover{background:var(--g2)}
+.hero{min-height:100vh;padding:130px 72px 100px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+#canvas{position:absolute;inset:0;pointer-events:none;opacity:.3}
+.hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(196,146,42,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(196,146,42,.025) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent)}
+.hero-glow{position:absolute;pointer-events:none;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(196,146,42,.07) 0%,transparent 65%);top:50%;right:-80px;transform:translateY(-50%)}
+.hero-inner{position:relative;z-index:2;max-width:860px}
+.badge{display:inline-flex;align-items:center;gap:10px;font-size:10px;letter-spacing:3.5px;text-transform:uppercase;color:var(--g);margin-bottom:48px;font-weight:600;opacity:0;animation:up 1s var(--ease) .1s forwards}
+.bdot{width:6px;height:6px;border-radius:50%;background:var(--g);animation:gp 2s infinite}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,8.5vw,120px);line-height:.93;letter-spacing:2px;margin-bottom:16px;opacity:0;animation:up 1s var(--ease) .2s forwards}
+.h1g{display:block;background:linear-gradient(135deg,var(--g),var(--g2),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.h1s{display:block;font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(36px,5vw,68px);color:var(--w2);letter-spacing:0}
+.hero-p{font-size:16px;line-height:1.9;color:var(--w2);max-width:520px;margin:36px 0 56px;opacity:0;animation:up 1s var(--ease) .35s forwards}
+.hero-btns{display:flex;gap:16px;align-items:center;flex-wrap:wrap;opacity:0;animation:up 1s var(--ease) .5s forwards}
+.btn-g{padding:16px 44px;background:var(--g);color:var(--k);font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:600;transition:all .3s;display:inline-block;position:relative;overflow:hidden}
+.btn-g::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--g2),var(--g3));opacity:0;transition:opacity .3s}
+.btn-g:hover::after{opacity:1}
+.btn-g span{position:relative;z-index:1}
+.btn-ghost{font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:500;color:var(--w2);display:flex;align-items:center;gap:8px;transition:color .25s}
+.btn-ghost:hover{color:var(--g)}
+.pills{display:flex;gap:14px;margin-top:72px;flex-wrap:wrap;opacity:0;animation:up 1s var(--ease) .65s forwards}
+.pill{padding:12px 20px;border:1px solid rgba(196,146,42,.14);background:rgba(196,146,42,.04);transition:all .3s}
+.pill:hover{border-color:rgba(196,146,42,.4);background:var(--ga);transform:translateY(-2px)}
+.pill-t{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--g);margin-bottom:3px}
+.pill-s{font-size:10px;color:var(--w2)}
+.ticker{border-top:1px solid rgba(196,146,42,.08);border-bottom:1px solid rgba(196,146,42,.08);padding:14px 0;overflow:hidden;background:var(--k2)}
+.ttrack{display:flex;white-space:nowrap;animation:ticker 30s linear infinite}
+.ti{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--w2);padding:0 44px;display:inline-flex;align-items:center;gap:44px;font-weight:500}
+.ti::after{content:'◆';color:var(--g);font-size:6px}
+.sec{padding:140px 72px}
+.stag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--g);font-weight:600;display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.stag::before{content:'';width:32px;height:1px;background:var(--g)}
+.sh{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,5.5vw,76px);letter-spacing:2px;line-height:.97}
+.shi{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;color:var(--g);letter-spacing:0;font-size:clamp(34px,4vw,60px)}
+.rv{opacity:0;transform:translateY(36px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
+.rv.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+/* WHAT */
+.what{background:var(--k2);padding:140px 72px}
+.what-g{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.wp-list{display:flex;flex-direction:column}
+.wp{display:grid;grid-template-columns:52px 1fr;gap:16px;padding:24px 0;border-bottom:1px solid rgba(196,146,42,.08);transition:padding-left .3s}
+.wp:last-child{border:none}
+.wp:hover{padding-left:8px}
+.wpn{font-family:'Bebas Neue',sans-serif;font-size:36px;color:rgba(196,146,42,.2);line-height:1;transition:color .3s}
+.wp:hover .wpn{color:rgba(196,146,42,.45)}
+.wpt{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:var(--g);margin-bottom:6px}
+.wpd{font-size:13px;color:var(--w2);line-height:1.75}
+.cta-box{background:var(--k);border:1px solid rgba(196,146,42,.28);padding:48px 40px;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--g),var(--g2),var(--g3))}
+.cta-tag{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--g);font-weight:600;margin-bottom:18px;display:block}
+.cta-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1px;line-height:1.1;margin-bottom:14px}
+.cta-desc{font-size:13px;color:var(--w2);line-height:1.85;margin-bottom:28px}
+.cta-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(196,146,42,.12);margin-bottom:28px}
+.cs{background:var(--k2);padding:14px 10px;text-align:center}
+.csn{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--g)}
+.csl{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--w2);margin-top:2px}
+.cta-btn{display:block;width:100%;padding:18px;text-align:center;background:linear-gradient(135deg,var(--g),var(--g2));color:var(--k);font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:14px;transition:all .3s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 20px 40px rgba(196,146,42,.3)}
+.cta-urg{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--w2);margin-bottom:12px}
+.udot{width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0;animation:ggreen 2s infinite}
+.cta-gua{font-size:10px;color:rgba(242,237,227,.35);text-align:center;line-height:2}
+.cta-gua span{color:var(--g)}
+/* ABOUT */
+.about{padding:140px 72px}
+.about-g{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start}
+.abp{font-size:14px;line-height:2;color:var(--w2);margin-bottom:20px}
+.diffs{display:flex;flex-direction:column;gap:10px;margin-top:32px}
+.diff{display:grid;grid-template-columns:22px 1fr;gap:14px;padding:16px 18px;background:var(--k2);border-left:2px solid var(--g);transition:background .3s}
+.diff:hover{background:var(--k3)}
+.diff-ico{color:var(--g);font-size:12px;margin-top:1px}
+.diff-t{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;margin-bottom:3px}
+.diff-d{font-size:12px;color:var(--w2);line-height:1.65}
+.founder{background:var(--k2);border:1px solid rgba(196,146,42,.15);padding:36px;position:relative;margin-bottom:12px}
+.founder::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--g),var(--g2))}
+.ftop{display:flex;align-items:center;gap:16px;margin-bottom:22px}
+.fav{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--g),var(--g2));display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--k);flex-shrink:0}
+.fname{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px}
+.frole{font-size:10px;color:var(--g);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-top:1px}
+.falso{font-size:10px;color:var(--w2);letter-spacing:1px}
+.fquote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;line-height:1.85;color:var(--w2);margin-bottom:22px;font-weight:300}
+.fstats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(196,146,42,.1)}
+.fst{background:var(--k2);padding:12px;text-align:center}
+.fstn{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--g)}
+.fstl{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--w2)}
+.vision{background:var(--k3);border:1px solid rgba(196,146,42,.1);padding:28px 32px}
+.vis-tag{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--g);font-weight:600;margin-bottom:10px}
+.vis-t{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1.5px;line-height:1.2;margin-bottom:12px}
+.vis-d{font-size:13px;color:var(--w2);line-height:1.85;margin-bottom:20px}
+.vis-cta{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--g);border:1px solid rgba(196,146,42,.3);padding:10px 20px;transition:all .3s}
+.vis-cta:hover{background:var(--g);color:var(--k)}
+/* PATHS */
+.paths{background:var(--k2);padding:140px 72px}
+.paths-g{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(196,146,42,.08);margin-top:80px}
+.path{background:var(--k2);padding:60px 48px;position:relative;overflow:hidden;transition:background .4s}
+.path:hover{background:var(--k3)}
+.path::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--g),var(--g2));transform:scaleX(0);transform-origin:left;transition:transform .5s}
+.path:hover::before{transform:scaleX(1)}
+.path-n{font-family:'Bebas Neue',sans-serif;font-size:80px;letter-spacing:2px;color:rgba(196,146,42,.06);line-height:1;margin-bottom:18px}
+.path-t{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:3px;margin-bottom:8px}
+.path-s{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--g);font-weight:600;margin-bottom:16px}
+.path-d{font-size:14px;color:var(--w2);line-height:1.9;margin-bottom:24px}
+.path-li-list{display:flex;flex-direction:column;gap:9px;margin-bottom:32px}
+.path-li{display:flex;gap:11px;font-size:13px;color:var(--w2);line-height:1.6}
+.path-li::before{content:'→';color:var(--g);flex-shrink:0}
+.path-cta{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--g);border:1px solid rgba(196,146,42,.3);padding:11px 22px;transition:all .3s}
+.path-cta:hover{background:var(--g);color:var(--k)}
+/* CATALOG */
+.catalog{padding:140px 72px}
+.cat-intro{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:end;margin-bottom:72px}
+.cat-desc{font-size:15px;line-height:2;color:var(--w2)}
+.cat-nav{display:flex;border-bottom:1px solid rgba(196,146,42,.1);margin-bottom:1px}
+.cat-btn{padding:13px 24px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--w2);border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .25s}
+.cat-btn:hover{color:var(--g)}
+.cat-btn.act{color:var(--g);border-bottom-color:var(--g)}
+.ags-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(196,146,42,.08)}
+.ag{background:var(--k);padding:40px 32px;position:relative;overflow:hidden;transition:background .35s}
+.ag:hover{background:var(--k2)}
+.ag::after{content:'';position:absolute;bottom:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--g),transparent);transition:width .5s}
+.ag:hover::after{width:100%}
+.ag-name{font-family:'Bebas Neue',sans-serif;font-size:44px;letter-spacing:2px;line-height:1;margin-bottom:4px}
+.ag-acc{color:var(--g)}
+.ag-role{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--w2);font-weight:600;margin-bottom:12px}
+.ag-live{display:flex;align-items:center;gap:6px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--g);font-weight:600;margin-bottom:12px}
+.ag-dot{width:5px;height:5px;border-radius:50%;background:var(--g);animation:gp 2s infinite}
+.ag-desc{font-size:12px;color:var(--w2);line-height:1.8;margin-bottom:16px}
+.ag-price{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;color:var(--g)}
+.ag-sub{font-size:10px;color:var(--w2);letter-spacing:1px}
+/* CUSTOM/TYPEFORM */
+.custom{background:var(--k2);padding:140px 72px}
+.custom-g{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start}
+.csteps{display:flex;flex-direction:column;margin-top:44px}
+.cst{display:grid;grid-template-columns:48px 1fr;gap:18px;padding:24px 0;border-bottom:1px solid rgba(196,146,42,.07);transition:padding-left .3s}
+.cst:last-child{border:none}
+.cst:hover{padding-left:8px}
+.cstn{font-family:'Bebas Neue',sans-serif;font-size:40px;color:rgba(196,146,42,.18);line-height:1;transition:color .3s}
+.cst:hover .cstn{color:rgba(196,146,42,.4)}
+.cstt{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;margin-bottom:5px}
+.cstd{font-size:13px;color:var(--w2);line-height:1.75}
+.tf-wrap{position:sticky;top:100px}
+.tf{background:var(--k3);border:1px solid rgba(196,146,42,.14);position:relative}
+.tf::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--g),transparent)}
+.tf-prog{height:2px;background:rgba(196,146,42,.15)}
+.tf-bar{height:100%;background:linear-gradient(90deg,var(--g),var(--g2));width:0%;transition:width .5s}
+.tf-head{padding:22px 28px 0;display:flex;align-items:center;justify-content:space-between}
+.tf-lbl{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--g);font-weight:600}
+.tf-cnt{font-size:11px;color:var(--w2)}
+.tf-body{padding:24px 28px}
+.tf-step{display:none}
+.tf-step.act{display:block;animation:tfin .4s var(--ease)}
+.tf-q{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;line-height:1.1;margin-bottom:6px}
+.tf-hint{font-size:12px;color:var(--w2);margin-bottom:20px;line-height:1.6}
+.tf-opts{display:flex;flex-direction:column;gap:7px}
+.tf-opt{padding:11px 14px;border:1px solid rgba(196,146,42,.15);background:none;color:var(--w2);font-size:12px;text-align:left;display:flex;align-items:center;gap:10px;transition:all .25s}
+.tf-opt:hover{border-color:rgba(196,146,42,.4);color:var(--w);background:var(--ga)}
+.tf-opt.sel{border-color:var(--g);color:var(--g);background:rgba(196,146,42,.1)}
+.tf-k{width:20px;height:20px;border:1px solid rgba(196,146,42,.3);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--g);flex-shrink:0;font-weight:700;transition:all .25s}
+.tf-opt.sel .tf-k{background:var(--g);color:var(--k);border-color:var(--g)}
+.tf-og{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.tf-og-btn{padding:10px 12px;border:1px solid rgba(196,146,42,.15);background:none;color:var(--w2);font-size:11px;text-align:left;transition:all .25s}
+.tf-og-btn:hover{border-color:rgba(196,146,42,.4);color:var(--w);background:var(--ga)}
+.tf-og-btn.sel{border-color:var(--g);color:var(--g);background:rgba(196,146,42,.1)}
+.tf-inp{width:100%;padding:12px 0;border:none;border-bottom:1px solid rgba(196,146,42,.25);background:none;color:var(--w);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .25s}
+.tf-inp::placeholder{color:rgba(242,237,227,.3)}
+.tf-inp:focus{border-bottom-color:var(--g)}
+.tf-ta{width:100%;padding:12px;border:1px solid rgba(196,146,42,.2);background:var(--k4);color:var(--w);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;resize:none;transition:border-color .25s;line-height:1.7}
+.tf-ta::placeholder{color:rgba(242,237,227,.3)}
+.tf-ta:focus{border-color:rgba(196,146,42,.45)}
+.tf-foot{padding:0 28px 24px;display:flex;align-items:center;justify-content:space-between;margin-top:18px}
+.tf-back{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--w2);background:none;border:none;display:flex;align-items:center;gap:6px;transition:color .25s}
+.tf-back:hover{color:var(--g)}
+.tf-next{padding:12px 24px;background:var(--g);color:var(--k);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;border:none;transition:all .3s}
+.tf-next:hover{background:var(--g2);transform:translateY(-1px)}
+.tf-ok{display:none;padding:40px 28px;text-align:center}
+.tf-ok.show{display:block;animation:tfin .5s var(--ease)}
+.tf-ok-ico{font-size:40px;margin-bottom:14px}
+.tf-ok-t{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;color:var(--g);margin-bottom:10px}
+.tf-ok-d{font-size:13px;color:var(--w2);line-height:1.85;margin-bottom:20px}
+.tf-wa{display:inline-block;padding:13px 24px;background:var(--g);color:var(--k);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;transition:all .3s}
+.tf-wa:hover{background:var(--g2);transform:translateY(-2px)}
+/* HOW */
+.how{padding:140px 72px}
+.how-g{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(196,146,42,.08);margin-top:80px}
+.how-c{background:var(--k);padding:48px 32px;transition:background .35s}
+.how-c:hover{background:var(--k2)}
+.how-n{font-family:'Bebas Neue',sans-serif;font-size:72px;letter-spacing:2px;color:rgba(196,146,42,.06);line-height:1;margin-bottom:16px}
+.how-ico{width:42px;height:42px;border:1px solid rgba(196,146,42,.22);display:flex;align-items:center;justify-content:center;color:var(--g);font-size:16px;margin-bottom:16px}
+.how-t{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;margin-bottom:10px}
+.how-d{font-size:13px;color:var(--w2);line-height:1.9}
+/* SECTORS */
+.sectors{background:var(--k2);padding:140px 72px}
+.sec-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(196,146,42,.08);margin-top:80px}
+.sc{background:var(--k2);padding:40px 32px;transition:background .35s}
+.sc:hover{background:var(--k3)}
+.sc-ico{font-size:24px;margin-bottom:12px}
+.sc-n{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;margin-bottom:7px}
+.sc-a{font-size:9px;color:var(--g);letter-spacing:1.5px;margin-bottom:10px;font-weight:600;text-transform:uppercase}
+.sc-d{font-size:12px;color:var(--w2);line-height:1.85}
+.sc-b{display:inline-block;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:600;border:1px solid rgba(196,146,42,.25);color:var(--g);padding:4px 10px;margin-top:12px}
+/* PRICING */
+.pricing{padding:140px 72px}
+.pri-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(196,146,42,.08);margin-top:80px}
+.plan{background:var(--k);padding:48px 40px;position:relative;transition:background .35s}
+.plan:hover,.plan.feat{background:var(--k2)}
+.plan-tag{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--g);font-weight:600;margin-bottom:12px}
+.plan-n{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:3px;margin-bottom:10px}
+.plan-d{font-size:13px;color:var(--w2);line-height:1.8;margin-bottom:24px}
+.plan-p{font-family:'Bebas Neue',sans-serif;font-size:56px;letter-spacing:2px;background:linear-gradient(135deg,var(--g),var(--g2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:4px}
+.plan-per{font-size:11px;color:var(--w2);letter-spacing:1px;margin-bottom:24px}
+.plan-fs{display:flex;flex-direction:column;gap:9px;margin-bottom:28px}
+.plan-f{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--w2)}
+.fok{color:var(--g);font-weight:700;font-size:12px}
+.plan-cta{display:block;width:100%;padding:13px;text-align:center;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;border:1px solid rgba(196,146,42,.3);color:var(--g);transition:all .3s}
+.plan-cta:hover,.plan.feat .plan-cta{background:var(--g);color:var(--k);border-color:var(--g)}
+.plan-custom{grid-column:1/-1;background:var(--k2);padding:44px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:60px;border-top:1px solid rgba(196,146,42,.08)}
+.pcrt{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;margin-bottom:8px}
+.pcrd{font-size:14px;color:var(--w2);line-height:1.85;max-width:600px}
+.pcrb{padding:15px 40px;background:linear-gradient(135deg,var(--g),var(--g2));color:var(--k);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;white-space:nowrap;transition:all .3s}
+.pcrb:hover{transform:translateY(-2px);box-shadow:0 20px 40px rgba(196,146,42,.25)}
+/* SOCIAL */
+.social{background:var(--k2);padding:140px 72px}
+.soc-g{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
+.soc-cards{display:flex;flex-direction:column;gap:9px}
+.soc-c{display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--k);border:1px solid rgba(196,146,42,.1);transition:all .3s;position:relative;overflow:hidden}
+.soc-c::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--g),var(--g2));transform:scaleY(0);transform-origin:top;transition:transform .4s}
+.soc-c:hover{background:var(--k2);border-color:rgba(196,146,42,.3);transform:translateX(5px)}
+.soc-c:hover::before{transform:scaleY(1)}
+.soc-ico{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.sig{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
+.stk{background:#010101;border:1px solid rgba(255,255,255,.1)}
+.sli{background:#0077b5}
+.swa{background:#25D366}
+.soc-info{flex:1}
+.soc-h{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:var(--w)}
+.soc-d{font-size:11px;color:var(--w2)}
+.soc-b{font-size:9px;color:var(--g);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-top:2px}
+.soc-arr{color:var(--g);font-size:15px;transition:transform .3s}
+.soc-c:hover .soc-arr{transform:translateX(4px)}
+/* PROOF */
+.proof{padding:140px 72px}
+.pr-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(196,146,42,.08);margin-top:80px}
+.pr-c{background:var(--k);padding:44px 32px;transition:background .35s}
+.pr-c:hover{background:var(--k2)}
+.pr-stars{color:var(--g);letter-spacing:4px;font-size:12px;margin-bottom:16px}
+.pr-q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;line-height:1.75;color:var(--w2);margin-bottom:24px;font-weight:300}
+.pr-by{display:flex;align-items:center;gap:12px}
+.pr-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--g),rgba(196,146,42,.3));display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:15px;color:var(--k)}
+.pr-n{font-size:13px;font-weight:600;margin-bottom:2px}
+.pr-r{font-size:10px;color:var(--w2);letter-spacing:1px}
+/* FAQ */
+.faq{background:var(--k2);padding:140px 72px}
+.faq-lay{display:grid;grid-template-columns:2fr 3fr;gap:120px}
+.faq-l{position:sticky;top:100px;align-self:start}
+.faq-note{font-size:14px;line-height:1.9;color:var(--w2);margin-top:22px}
+.fi{border-bottom:1px solid rgba(196,146,42,.1);padding:20px 0}
+.fi-q{display:flex;justify-content:space-between;align-items:center;gap:20px;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1.5px;line-height:1.3}
+.fi-plus{color:var(--g);font-size:20px;flex-shrink:0;transition:transform .4s;font-family:'DM Sans',sans-serif;font-weight:300}
+.fi-a{font-size:13px;color:var(--w2);line-height:1.9;max-height:0;overflow:hidden;transition:max-height .5s var(--ease),padding .4s}
+.fi.open .fi-plus{transform:rotate(45deg)}
+.fi.open .fi-a{max-height:250px;padding-top:14px}
+/* FINAL CTA */
+.final{padding:160px 72px;text-align:center;position:relative;overflow:hidden}
+.final-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,18vw,280px);letter-spacing:5px;color:rgba(196,146,42,.025);pointer-events:none;white-space:nowrap}
+.final-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--g);font-weight:600;margin-bottom:36px;display:block}
+.final-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,96px);letter-spacing:2px;line-height:.97;max-width:900px;margin:0 auto 20px}
+.final-hg{background:linear-gradient(135deg,var(--g),var(--g2),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.final-sub{font-size:16px;color:var(--w2);line-height:1.8;margin-bottom:12px}
+.final-note{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(196,146,42,.4);margin-bottom:52px}
+.final-form{display:flex;max-width:500px;margin:0 auto 48px;flex-wrap:wrap}
+.final-inp{flex:1;min-width:200px;padding:16px 20px;background:var(--k2);border:1px solid rgba(196,146,42,.15);border-right:none;color:var(--w);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .25s}
+.final-inp::placeholder{color:var(--w2)}
+.final-inp:focus{border-color:rgba(196,146,42,.4)}
+.final-btn{padding:16px 28px;background:linear-gradient(135deg,var(--g),var(--g2));color:var(--k);border:none;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .3s}
+.final-btn:hover{transform:translateY(-2px);box-shadow:0 20px 40px rgba(196,146,42,.25)}
+.compat{display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap}
+.compat-l{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--w2)}
+.compat-sep{width:1px;height:14px;background:rgba(196,146,42,.2)}
+.compat-n{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(242,237,227,.2);font-weight:500}
+/* FOOTER */
+footer{border-top:1px solid rgba(196,146,42,.08);padding:40px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.f-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:4px}
+.f-dot{color:var(--g)}
+.f-links{display:flex;gap:28px}
+.f-links a{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--w2);transition:color .2s}
+.f-links a:hover{color:var(--g)}
+.f-soc{display:flex;gap:10px}
+.fsi{width:32px;height:32px;border-radius:50%;border:1px solid rgba(196,146,42,.2);display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .3s}
+.fsi:hover{border-color:var(--g);background:var(--ga);transform:translateY(-2px)}
+.f-copy{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(196,146,42,.3)}
+/* ANIMS */
+@keyframes up{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:none}}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes gp{0%,100%{opacity:1;box-shadow:0 0 6px var(--g)}50%{opacity:.3;box-shadow:none}}
+@keyframes ggreen{0%,100%{box-shadow:0 0 6px #22c55e}50%{box-shadow:none}}
+@keyframes tfin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+/* ── COLLAPSIBLE AGENTS ── */
+.ag-toggle{display:none} /* hidden on desktop */
+.ag-collapsed{display:block} /* always visible on desktop */
+.ag-header{display:block;cursor:default}
+
+/* RESPONSIVE TABLET */
+@media(max-width:1100px){
+  nav,nav.s{padding:18px 24px}
+  .nav-links{display:none}
+  .hero,.what,.about,.paths,.catalog,.custom,.how,.sectors,.pricing,.social,.proof,.faq,.final{padding:80px 24px}
+  .what-g,.about-g,.paths-g,.cat-intro,.custom-g,.soc-g,.faq-lay,.pri-g{grid-template-columns:1fr;gap:40px}
+  .how-g{grid-template-columns:1fr 1fr}
+  .sec-g,.pr-g{grid-template-columns:1fr}
+  .ags-grid{grid-template-columns:1fr 1fr}
+  .plan-custom{grid-template-columns:1fr;gap:24px}
+  .faq-l{position:relative;top:0}
+  .tf-wrap{position:relative;top:0}
+  footer{padding:28px 24px;flex-direction:column;text-align:center}
+  .f-links{display:none}
+  .final-form{flex-direction:column}
+  .final-inp{border-right:1px solid rgba(196,146,42,.15);border-bottom:none}
+}
+
+/* ── MOBILE ── */
+@media(max-width:600px){
+  /* Base */
+  body{cursor:auto}
+  #cur,#cur2{display:none}
+
+  nav,nav.s{padding:16px 20px}
+  .nav-cta{padding:10px 18px;font-size:10px}
+
+  /* Hero — dark, readable, compact */
+  .hero{
+    padding:100px 20px 60px;
+    min-height:100svh;
+    background:var(--k) !important;
+  }
+  .hero-grid{display:none}
+  h1{font-size:clamp(48px,13vw,72px) !important;line-height:.9 !important}
+  .h1s{font-size:clamp(28px,8vw,44px) !important}
+  .hero-p{font-size:14px !important;margin:20px 0 36px !important;color:rgba(242,237,227,.7) !important}
+  .btn-g{width:100%;text-align:center;padding:17px 20px !important;font-size:13px !important}
+  .hero-btns{flex-direction:column;gap:12px}
+  .btn-ghost{justify-content:center;font-size:11px}
+  .pills{flex-direction:column;gap:8px;margin-top:40px}
+  .pill{padding:10px 16px}
+
+  /* Ticker */
+  .ticker{padding:10px 0}
+
+  /* Sections — tighter padding */
+  .what,.about,.paths,.catalog,.custom,.how,.sectors,.pricing,.social,.proof,.faq,.final{
+    padding:64px 20px !important;
+  }
+
+  /* What */
+  .what-g{gap:40px}
+  .what{background:var(--k2)}
+  .cta-box{padding:28px 20px}
+  .cta-title{font-size:22px}
+  .cta-stats{grid-template-columns:repeat(3,1fr)}
+  .csn{font-size:18px}
+  .cta-btn{padding:16px;font-size:12px}
+
+  /* About */
+  .about{background:var(--k)}
+  .about-g{gap:36px}
+  .founder{padding:24px 20px}
+  .vision{padding:22px 20px}
+  .fstats{grid-template-columns:repeat(3,1fr)}
+  .fstn{font-size:20px}
+
+  /* Paths */
+  .paths{background:var(--k2)}
+  .paths-g{grid-template-columns:1fr;gap:1px}
+  .path{padding:40px 20px}
+  .path-n{font-size:60px}
+
+  /* Catalog — mobile collapsible */
+  .catalog{background:var(--k)}
+  .cat-intro{gap:24px}
+  .cat-nav{overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;flex-wrap:nowrap}
+  .cat-nav::-webkit-scrollbar{display:none}
+  .cat-btn{padding:10px 16px;font-size:10px;white-space:nowrap;flex-shrink:0}
+  .ags-grid{grid-template-columns:1fr;gap:1px}
+  /* Mobile: show toggle, collapse content */
+  .ag-toggle{display:block;color:var(--g);font-size:20px;font-family:'DM Sans',sans-serif;font-weight:300;transition:transform .35s var(--ease);flex-shrink:0}
+  .ag-header{display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
+  .ag-collapsed{display:none}
+  .ag.open .ag-toggle{transform:rotate(45deg)}
+  .ag.open .ag-collapsed{display:block;animation:tfin .35s var(--ease)}
+  /* Each agent = collapsed row on mobile */
+  .ag{padding:18px 20px}
+  .ag-header{gap:12px}
+  .ag-name{font-size:28px;margin-bottom:0}
+
+  /* Custom / Typeform */
+  .custom{background:var(--k2)}
+  .custom-g{gap:36px}
+  .tf{border:1px solid rgba(196,146,42,.2)}
+  .tf-body{padding:20px 20px}
+  .tf-foot{padding:0 20px 20px}
+  .tf-head{padding:18px 20px 0}
+  .tf-q{font-size:18px}
+
+  /* How */
+  .how{background:var(--k)}
+  .how-g{grid-template-columns:1fr;gap:1px}
+  .how-c{padding:32px 20px}
+  .how-n{font-size:52px}
+
+  /* Sectors */
+  .sectors{background:var(--k2)}
+  .sec-g{grid-template-columns:1fr;gap:1px}
+  .sc{padding:28px 20px}
+
+  /* Pricing */
+  .pricing{background:var(--k)}
+  .pri-g{grid-template-columns:1fr;gap:1px}
+  .plan{padding:36px 20px}
+  .plan-p{font-size:44px}
+  .plan-custom{padding:28px 20px;gap:20px}
+
+  /* Social */
+  .social{background:var(--k2)}
+  .soc-g{gap:36px}
+  .soc-c{padding:16px 18px}
+
+  /* Proof */
+  .proof{background:var(--k)}
+  .pr-g{grid-template-columns:1fr;gap:1px}
+  .pr-c{padding:32px 20px}
+
+  /* FAQ */
+  .faq{background:var(--k2)}
+  .faq-lay{grid-template-columns:1fr;gap:32px}
+  .fi{padding:16px 0}
+  .fi-q{font-size:14px}
+
+  /* Final CTA */
+  .final{padding:80px 20px !important}
+  .final-bg{font-size:80px}
+  .final-h{font-size:clamp(36px,10vw,56px) !important}
+  .final-sub{font-size:14px}
+  .final-form{flex-direction:column;margin-bottom:32px}
+  .final-inp{border-right:1px solid rgba(196,146,42,.15);border-bottom:none;padding:14px 16px}
+  .final-btn{padding:15px 20px;font-size:11px}
+  .compat{gap:12px}
+
+  /* Footer */
+  footer{padding:24px 20px;flex-direction:column;text-align:center;gap:16px}
+  .f-links{display:none}
+  .f-copy{font-size:9px}
+
+  /* Floating WhatsApp button */
+  .wa-float{
+    position:fixed;bottom:24px;right:20px;z-index:500;
+    width:56px;height:56px;border-radius:50%;
+    background:#25D366;
+    display:flex;align-items:center;justify-content:center;
+    font-size:26px;box-shadow:0 4px 20px rgba(37,211,102,.4);
+    transition:transform .3s var(--ease);
+    animation:wapulse 3s infinite;
+  }
+  .wa-float:hover{transform:scale(1.1)}
+  @keyframes wapulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.4)}50%{box-shadow:0 4px 32px rgba(37,211,102,.7)}}
+}
+</style>
+</head>
+<body>
+<div id="cur"></div>
+<div id="cur2"></div>
+
+<!-- FLOATING WA (mobile only) -->
+<a href="https://wa.me/34684376027?text=Hola%2C%20quiero%20una%20demo%20gratuita%20de%20Veloxia." class="wa-float" target="_blank" aria-label="WhatsApp">💬</a>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="logo">VELOXIA<span class="logo-dot">.</span></div>
+  <ul class="nav-links">
+    <li><a href="#nosotros">Quiénes somos</a></li>
+    <li><a href="#catalogo">Catálogo</a></li>
+    <li><a href="#medida">A medida</a></li>
+    <li><a href="#sectores">Sectores</a></li>
+    <li><a href="#precios">Precios</a></li>
+  </ul>
+  <a href="https://wa.me/34684376027?text=Hola%2C%20quiero%20una%20demo%20gratuita%20de%20Veloxia." class="nav-cta" target="_blank">Solicitar demo</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="canvas"></canvas>
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="badge"><span class="bdot"></span>Tu problema. Nuestro agente. · Resultados en 7 días</div>
+    <h1>
+      <span class="h1g">CUÉNTANOS</span>
+      TU PROBLEMA.
+      <span class="h1s">Te creamos el agente perfecto.</span>
+    </h1>
+    <p class="hero-p">Veloxia diseña, implanta y supervisa agentes de inteligencia artificial para empresas con procesos repetitivos. Tú nos dices el problema. Nosotros lo resolvemos.</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/34684376027?text=Hola%2C%20quiero%20una%20demo%20gratuita%20de%20Veloxia." class="btn-g" target="_blank"><span>Quiero la demo gratuita</span></a>
+      <a href="#catalogo" class="btn-ghost">Ver catálogo →</a>
+    </div>
+    <div class="pills">
+      <div class="pill"><div class="pill-t">📦 Catálogo</div><div class="pill-s">32 agentes · Activos en 7 días</div></div>
+      <div class="pill"><div class="pill-t">⚡ A medida</div><div class="pill-s">Tu problema → Tu agente</div></div>
+      <div class="pill"><div class="pill-t">🔄 Gestionado</div><div class="pill-s">Supervisión y mejora continua</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ttrack">
+    <span class="ti">Inmobiliarias</span><span class="ti">Brokers hipotecarios</span><span class="ti">Clínicas</span><span class="ti">Autoescuelas</span><span class="ti">Gimnasios</span><span class="ti">Peluquerías</span><span class="ti">Talleres mecánicos</span><span class="ti">Academias</span><span class="ti">Asesorías</span><span class="ti">Seguros</span><span class="ti">Despachos</span><span class="ti">Estética</span><span class="ti">Webs con IA</span><span class="ti">Soporte técnico IA</span>
+    <span class="ti">Inmobiliarias</span><span class="ti">Brokers hipotecarios</span><span class="ti">Clínicas</span><span class="ti">Autoescuelas</span><span class="ti">Gimnasios</span><span class="ti">Peluquerías</span><span class="ti">Talleres mecánicos</span><span class="ti">Academias</span><span class="ti">Asesorías</span><span class="ti">Seguros</span><span class="ti">Despachos</span><span class="ti">Estética</span>
+  </div>
+</div>
+
+<!-- 1. LO QUE VENDEMOS + CTA AGRESIVO -->
+<section class="what" id="servicios">
+  <div class="what-g">
+    <div>
+      <div class="stag rv">Lo que hacemos</div>
+      <h2 class="sh rv" style="margin-bottom:28px">IMPLANTAMOS AGENTES IA<br>QUE TRABAJAN POR TI<br><span class="shi">las 24 horas.</span></h2>
+      <p class="rv" style="font-size:15px;line-height:2;color:var(--w2);margin-bottom:36px">No vendemos software. No vendemos bots. Vendemos resultados. Diseñamos, implantamos y supervisamos agentes de IA que responden leads, hacen seguimiento, cualifican clientes y gestionan procesos — mientras tú cierras operaciones.</p>
+      <div class="wp-list">
+        <div class="wp rv d1"><div class="wpn">01</div><div><div class="wpt">RESPONDES ANTES QUE NADIE</div><div class="wpd">El 73% de los leads se pierden sin respuesta en 5 minutos. Nuestros agentes responden en menos de 2 — a cualquier hora, cualquier día.</div></div></div>
+        <div class="wp rv d2"><div class="wpn">02</div><div><div class="wpt">NUNCA SE OLVIDAN DE NADIE</div><div class="wpd">El seguimiento manual falla. Los agentes no. Cada lead, cada expediente, cada cliente recibe atención puntual sin que nadie tenga que recordarlo.</div></div></div>
+        <div class="wp rv d3"><div class="wpn">03</div><div><div class="wpt">ROI DESDE LA PRIMERA SEMANA</div><div class="wpd">Supervisamos cada mes, medimos el impacto y optimizamos. Si no hay ROI claro, algo falla y lo arreglamos. Sin excusas.</div></div></div>
+        <div class="wp rv d4"><div class="wpn">04</div><div><div class="wpt">WEBS PROFESIONALES CON IA</div><div class="wpd">Diseñamos tu web con agentes IA integrados desde el día 1. Formularios inteligentes, chat 24/7 y respuesta automática de leads. Entrega en 7 días.</div></div></div>
+        <div class="wp rv" style="transition-delay:.5s"><div class="wpn">05</div><div><div class="wpt">SOPORTE TÉCNICO IA</div><div class="wpd">¿Ya tienes IA pero no funciona bien? Auditamos, corregimos y optimizamos. Ajuste de prompts, flujos rotos, integraciones fallidas. Respuesta en menos de 24h.</div></div></div>
+      </div>
+    </div>
+    <div class="rv d1">
+      <div class="cta-box">
+        <span class="cta-tag">⚡ Demo gratuita · Hoy mismo</span>
+        <div class="cta-title">¿Cuánto dinero estás perdiendo esta semana?</div>
+        <p class="cta-desc">En 30 minutos te mostramos exactamente cuántos leads se pierden en tu negocio y qué agente lo resuelve. Sin compromiso. Sin coste.</p>
+        <div class="cta-stats">
+          <div class="cs"><div class="csn">2 min</div><div class="csl">Respuesta agente</div></div>
+          <div class="cs"><div class="csn">7 días</div><div class="csl">Para estar activo</div></div>
+          <div class="cs"><div class="csn">30x</div><div class="csl">ROI máximo</div></div>
+        </div>
+        <a href="https://wa.me/34684376027?text=Hola%2C%20quiero%20una%20demo%20gratuita%20de%20Veloxia." class="cta-btn" target="_blank">Quiero la demo gratuita →</a>
+        <div class="cta-urg"><span class="udot"></span>Solo 3 plazas de onboarding disponibles este mes</div>
+        <div class="cta-gua"><span>✓</span> Sin permanencia inicial &nbsp;·&nbsp; <span>✓</span> Sin coste &nbsp;·&nbsp; <span>✓</span> Respuesta en minutos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. QUIÉNES SOMOS -->
+<section class="about" id="nosotros">
+  <div class="about-g">
+    <div>
+      <div class="stag rv">Quiénes somos</div>
+      <h2 class="sh rv" style="margin-bottom:24px">NO SOMOS UNA<br>AGENCIA DE IA.<br><span class="shi">Somos el sector.</span></h2>
+      <p class="abp rv">Veloxia nació desde dentro del sector inmobiliario y financiero. No desde una agencia de tecnología que decidió hacer IA — sino desde profesionales que vivieron cada día el dinero que se pierde por no responder a tiempo, por el seguimiento manual, por los leads que se enfrían antes de que alguien los llame.</p>
+      <p class="abp rv">Cuando diseñamos un agente para tu negocio, no lo diseñamos basándonos en suposiciones. Lo diseñamos sabiendo exactamente qué pasa en tu día a día y dónde está el dinero que se escapa.</p>
+      <div class="diffs">
+        <div class="diff rv d1"><div class="diff-ico">◎</div><div><div class="diff-t">CONOCEMOS TU SECTOR</div><div class="diff-d">Venimos del mundo inmobiliario e hipotecario. Entendemos el proceso real, no la teoría.</div></div></div>
+        <div class="diff rv d2"><div class="diff-ico">◎</div><div><div class="diff-t">NO INSTALAMOS Y DESAPARECEMOS</div><div class="diff-d">Supervisamos, optimizamos y mejoramos cada mes. El agente evoluciona con tu negocio.</div></div></div>
+        <div class="diff rv d3"><div class="diff-ico">◎</div><div><div class="diff-t">VENDEMOS RESULTADOS</div><div class="diff-d">Si los agentes no generan ROI claro, algo falla y lo arreglamos. Sin excusas ni letra pequeña.</div></div></div>
+      </div>
+    </div>
+    <div>
+      <!-- CTA agresivo -->
+      <div class="cta-box rv" style="margin-bottom:14px">
+        <span class="cta-tag">⚡ ¿Por qué contratarnos ahora?</span>
+        <div class="cta-title">Cada semana sin agentes IA es dinero que se va.</div>
+        <p class="cta-desc">Mientras lees esto, hay leads entrando en tu negocio que nadie va a responder en los próximos 5 minutos. Eso es dinero perdido. Lo resolvemos en 7 días.</p>
+        <div class="cta-stats">
+          <div class="cs"><div class="csn">73%</div><div class="csl">Leads perdidos sin respuesta rápida</div></div>
+          <div class="cs"><div class="csn">7 días</div><div class="csl">Para estar operativo</div></div>
+          <div class="cs"><div class="csn">30x</div><div class="csl">ROI máximo demostrado</div></div>
+        </div>
+        <a href="https://wa.me/34684376027?text=Hola%2C%20quiero%20una%20demo%20gratuita%20de%20Veloxia." class="cta-btn" target="_blank">Quiero la demo gratuita →</a>
+        <div class="cta-urg"><span class="udot"></span>Solo 3 plazas de onboarding disponibles este mes</div>
+        <div class="cta-gua"><span>✓</span> Sin permanencia inicial &nbsp;·&nbsp; <span>✓</span> Resultados en 7 días &nbsp;·&nbsp; <span>✓</span> Demo gratuita</div>
+      </div>
+      <div class="vision rv d1">
+        <div class="vis-tag">Nuestra misión</div>
+        <div class="vis-t">Un agente IA para cada negocio con procesos repetitivos.</div>
+        <p class="vis-d">Empezamos por inmobiliarias y brokers. Ahora servimos a clínicas, gimnasios, academias, talleres y cualquier negocio que pierda tiempo y dinero en tareas repetitivas.</p>
+        <a href="#catalogo" class="vis-cta">Ver todos los agentes →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. DOS CAMINOS -->
+<section class="paths" id="concepto">
+  <div class="stag rv">Dos caminos. Un resultado.</div>
+  <h2 class="sh rv">¿YA SABES LO QUE NECESITAS<br>O LO <span class="shi">descubrimos juntos?</span></h2>
+  <div class="paths-g">
+    <div class="path rv">
+      <div class="path-n">01</div>
+      <div class="path-t">CATÁLOGO</div>
+      <div class="path-s">Listos para activar en 7 días</div>
+      <p class="path-d">32 agentes IA ya construidos, probados y optimizados. Los activamos y adaptamos a tu negocio sin empezar desde cero.</p>
+      <div class="path-li-list">
+        <div class="path-li">ARIA — Responde leads en menos de 2 minutos</div>
+        <div class="path-li">MATCH — Reactiva compradores dormidos automáticamente</div>
+        <div class="path-li">QUALIF — Pre-cualifica clientes antes de la visita</div>
+        <div class="path-li">CALL — Briefing diario de llamadas prioritarias</div>
+        <div class="path-li">Y 27 agentes más en el catálogo completo</div>
+      </div>
+      <a href="#catalogo" class="path-cta">Ver catálogo completo →</a>
+    </div>
+    <div class="path rv d1">
+      <div class="path-n">02</div>
+      <div class="path-t">A MEDIDA</div>
+      <div class="path-s">Tu problema → Tu agente perfecto</div>
+      <p class="path-d">Si tienes un proceso específico que no está en el catálogo, nos lo cuentas y diseñamos el agente exacto desde cero con tu lógica y tu tono.</p>
+      <div class="path-li-list">
+        <div class="path-li">Nos cuentas el problema en 15 minutos</div>
+        <div class="path-li">Diseñamos la arquitectura del agente</div>
+        <div class="path-li">Lo construimos, entrenamos y probamos</div>
+        <div class="path-li">Lo implantamos en 2-3 semanas</div>
+        <div class="path-li">Lo supervisamos y mejoramos cada mes</div>
+      </div>
+      <a href="#medida" class="path-cta">Cuéntanos tu problema →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 4. CATÁLOGO -->
+<section class="catalog" id="catalogo">
+  <div class="cat-intro">
+    <div>
+      <div class="stag rv">Catálogo de agentes</div>
+      <h2 class="sh rv">32 AGENTES.<br><span class="shi">Listos para activar.</span></h2>
+    </div>
+    <p class="cat-desc rv">Cada agente hace una sola cosa y la hace perfecta. Entrenados, probados y optimizados. Los activamos en tu negocio en 7 días sin cambiar nada de tu operativa actual.</p>
+  </div>
+  <div class="cat-nav rv">
+    <button class="cat-btn act" onclick="filt('all',this)">TODOS</button>
+    <button class="cat-btn" onclick="filt('cap',this)">CAPTACIÓN</button>
+    <button class="cat-btn" onclick="filt('seg',this)">SEGUIMIENTO</button>
+    <button class="cat-btn" onclick="filt('cua',this)">CUALIFICACIÓN</button>
+    <button class="cat-btn" onclick="filt('ope',this)">OPERACIONES</button>
+    <button class="cat-btn" onclick="filt('ana',this)">ANÁLISIS</button>
+  </div>
+  <div class="ags-grid rv">
+    <div class="ag" data-c="cap" onclick="toggleAg(this)">
+<div class="ag-header">
+  <div class="ag-name"><span class="ag-acc">AR</span>IA</div>
+  <span class="ag-toggle">+</span>
+</div>
+<div class="ag-collapsed">
+  <div class="ag-role">Respuesta instantánea</div>
+  <div class="ag-live"><span class="ag-dot"></span>Activo 24/7</div>
+  <p class="ag-desc">Responde cada lead en menos de 2 minutos con mensaje personalizado que menciona el producto exacto que preguntaron.</p>
+  <div class="ag-price">297€/mes</div>
+  <div class="ag-sub">0€ setup · Activo en 7 días</div>
+</div>
+</div>
+    <div class="ag" data-c="cap" onclick="toggleAg(this)">
+<div class="ag-header">
+  <div class="ag-name"><span class="ag-acc">NO</span>VA</div>
+  <span class="ag-toggle">+</span>
+</div>
+<div class="ag-collapsed">
+  <div class="ag-role">Captación proactiva</div>
+  <div class="ag-live"><span class="ag-dot" style="animation-delay:.4s"></span>Activo 24/7</div>
+  <p class="ag-desc">Detecta oportunidades en zonas objetivo y envía primer contacto personalizado automáticamente. Pipeline siempre activo.</p>
+  <div class="ag-price">497€/mes</div>
+  <div class="ag-sub">1.500€ setup · Configuración por zona</div>
+</div>
+</div>
+    <div class="ag" data-c="cap" onclick="toggleAg(this)">
+<div class="ag-header">
+  <div class="ag-name"><span class="ag-acc">MA</span>TCH</div>
+  <span class="ag-toggle">+</span>
+</div>
+<div class="ag-collapsed">
+  <div class="ag-role">Matching automático</div>
+  <div class="ag-live"><span class="ag-dot" style="animation-delay:.8s"></span>Activo 24/7</div>
+  <p class="ag-desc">Cuando entra un nuevo producto cruza con toda la base y manda WhatsApp personalizado a los mejores matches.</p>
+  <div class="ag-price">+250€/mes</div>
+  <div class="ag-sub">Sobre ARIA · Requiere base de clientes</div>
+</div>
+</div>
+    <div class="ag" data-c="seg" onclick="toggleAg(this)">
+<div class="ag-header">
+  <div class="ag-name"><span class="ag-acc">FL</span>UX</div>
+  <span class="ag-toggle">+</span>
+</div>
+<div class="ag-collapsed">
+  <div class="ag-role">Seguimiento 7 días</div>
+  <div class="ag-live"><span class="ag-dot"></span>Activo 24/7</div>
+  <p class="ag-desc">Secuencia automática de 7 días si el lead no responde. Mensajes adaptativos en cada etapa. Para cuando responde.</p>
+  <div class="ag-price">+150€/mes</div>
+  <div class="ag-sub">Sobre ARIA · Bundle recomendado</div>
+</div>
+</div>
+    <div class="ag" data-c="seg" onclick="toggleAg(this)">
+<div class="ag-header">
+  <div class="ag-name"><span class="ag-acc">RE</span>TAIN</div>
+  <span class="ag-toggle">+</span>
+</div>
+<div class="ag-collapsed">
+  <div class="ag-role">Reactivación post-visita</div>
+  <div class="ag-live"><span class="ag-dot" style="animation-delay:.4s"></span>Activo 24/7</div>
+  <p class="ag-desc">Sigue a quienes visitaron pero no compraron durante 60 días. Convierte visitas perdidas en leads financieros.</p>
+  <div class="ag-price">197€/mes</div>
+  <div class="ag-sub">ROI máximo del catálogo: 30x</div>
+</div>
+</div>
+    <div class="ag" data-c="seg" onclick="toggleAg(this)">
+<div class="ag-header">
+  <div class="ag-name"><span class="ag-acc">RE</span>FER</div>
+  <span class="ag-toggle">+</span>
+</div>
+<div class="ag-collapsed">
+  <div class="ag-role">Activación de referidos</div>
+  <div class="ag-live"><span class="ag-dot" style="animation-delay:.8s"></span>Activo 24/7</div>
+  <p class="ag-desc">Convierte clientes satisfechos en nuevas oportunidades mediante secuencia de recomendación en el momento perfecto.</p>
+  <div class="ag-price">Bundle Elite</div>
+  <div class="ag-sub">Incluido en Plan Elite</div>
+</div>
+</div>
+    <div class="ag" data-c="cua" onclick="toggleAg(this)">
+<div class="ag-header">
+  <div class="ag-name"><span class="ag-acc">QU</span>ALIF</div>
+  <span class="ag-toggle">+</span>
+</div>
+<div class="ag-collapsed">
+  <div class="ag-role">Pre-cualificación</div>
+  <div class="ag-live"><span class="ag-dot"></span>Activo 24/7</div>
+  <p class="ag-desc">Pre-cualifica clientes por WhatsApp antes de la visita. Analiza viabilidad y devuelve informe completo al asesor.</p>
+  <div class="ag-price">197€/mes</div>
+  <div class="ag-sub">Especializado en mercado hipotecario ES</div>
+</div>
+</div>
+    <div class="ag" data-c="cua" onclick="toggleAg(this)">
+<div class="ag-header">
+  <div class="ag-name"><span class="ag-acc">SC</span>OUT</div>
+  <span class="ag-toggle">+</span>
+</div>
+<div class="ag-collapsed">
+  <div class="ag-role">Inteligencia de mercado</div>
+  <div class="ag-live"><span class="ag-dot" style="animation-delay:.4s"></span>Activo 24/7</div>
+  <p class="ag-desc">Monitoriza precios y movimientos de la competencia en tiempo real. Informe semanal de oportunidades al director.</p>
+  <div class="ag-price">197€/mes</div>
+  <div class="ag-sub">0€ setup · Configuración por zona</div>
+</div>
+</div>
+    <div class="ag" data-c="cua" onclick="toggleAg(this)">
+<div class="ag-header">
+  <div class="ag-name"><span class="ag-acc">RA</span>TE</div>
+  <span class="ag-toggle">+</span>
+</div>
+<div class="ag-collapsed">
+  <div class="ag-role">Monitorización tipos</div>
+  <div class="ag-live"><span class="ag-dot" style="animation-delay:.8s"></span>Activo 24/7</div>
+  <p class="ag-desc">Vigila Euríbor y ofertas bancarias. Alerta a clientes existentes cuando conviene revisar o cambiar condiciones.</p>
+  <div class="ag-price">147€/mes</div>
+  <div class="ag-sub">Genera negocio recurrente de cartera</div>
+</div>
+</div>
+    <div class="ag" data-c="ope" onclick="toggleAg(this)">
+<div class="ag-header">
+  <div class="ag-name"><span class="ag-acc">CA</span>LL</div>
+  <span class="ag-toggle">+</span>
+</div>
+<div class="ag-collapsed">
+  <div class="ag-role">Briefing de llamadas</div>
+  <div class="ag-live"><span class="ag-dot"></span>Activo 24/7</div>
+  <p class="ag-desc">Cada mañana a las 8:30 dice exactamente a quién llamar, por qué y qué decir. Briefing completo con contexto.</p>
+  <div class="ag-price">197€/mes</div>
+  <div class="ag-sub">El favorito de brokers hipotecarios</div>
+</div>
+</div>
+    <div class="ag" data-c="ope" onclick="toggleAg(this)">
+<div class="ag-header">
+  <div class="ag-name"><span class="ag-acc">DO</span>CS</div>
+  <span class="ag-toggle">+</span>
+</div>
+<div class="ag-collapsed">
+  <div class="ag-role">Gestión documental</div>
+  <div class="ag-live"><span class="ag-dot" style="animation-delay:.4s"></span>Activo 24/7</div>
+  <p class="ag-desc">Pide documentación, hace seguimiento cada 48h si falta algo y alerta cuando está todo completo.</p>
+  <div class="ag-price">Bundle Pro</div>
+  <div class="ag-sub">Incluido en Plan Pro y Elite</div>
+</div>
+</div>
+    <div class="ag" data-c="ope" onclick="toggleAg(this)">
+<div class="ag-header">
+  <div class="ag-name"><span class="ag-acc">IN</span>VOICE</div>
+  <span class="ag-toggle">+</span>
+</div>
+<div class="ag-collapsed">
+  <div class="ag-role">Facturación automática</div>
+  <div class="ag-live"><span class="ag-dot" style="animation-delay:.8s"></span>Activo 24/7</div>
+  <p class="ag-desc">Genera facturas al cerrar una operación, rastrea comisiones pendientes y prepara resumen mensual para el gestor.</p>
+  <div class="ag-price">197€/mes</div>
+  <div class="ag-sub">Compatible con cualquier gestoría</div>
+</div>
+</div>
+    <div class="ag" data-c="ana" onclick="toggleAg(this)">
+<div class="ag-header">
+  <div class="ag-name"><span class="ag-acc">RE</span>PORT</div>
+  <span class="ag-toggle">+</span>
+</div>
+<div class="ag-collapsed">
+  <div class="ag-role">Informes ejecutivos</div>
+  <div class="ag-live"><span class="ag-dot"></span>Activo 24/7</div>
+  <p class="ag-desc">Cada lunes el director recibe el informe completo: KPIs, leads, conversión, riesgos y recomendaciones de la IA.</p>
+  <div class="ag-price">Bundle Elite</div>
+  <div class="ag-sub">Incluido en Plan Elite</div>
+</div>
+</div>
+    <div class="ag" data-c="ana" onclick="toggleAg(this)">
+<div class="ag-header">
+  <div class="ag-name"><span class="ag-acc">AL</span>ERT</div>
+  <span class="ag-toggle">+</span>
+</div>
+<div class="ag-collapsed">
+  <div class="ag-role">Alertas críticas</div>
+  <div class="ag-live"><span class="ag-dot" style="animation-delay:.4s"></span>Activo 24/7</div>
+  <p class="ag-desc">Detecta bloqueos, caídas de KPIs o riesgos antes de que se conviertan en un problema grave para el negocio.</p>
+  <div class="ag-price">Bundle Elite</div>
+  <div class="ag-sub">Incluido en Plan Elite</div>
+</div>
+</div>
+    <div class="ag" data-c="ana" onclick="toggleAg(this)">
+<div class="ag-header">
+  <div class="ag-name"><span class="ag-acc">RE</span>VIEW</div>
+  <span class="ag-toggle">+</span>
+</div>
+<div class="ag-collapsed">
+  <div class="ag-role">Reseñas automáticas y reputación</div>
+  <div class="ag-live"><span class="ag-dot" style="animation-delay:.8s"></span>Activo 24/7</div>
+  <p class="ag-desc">Detecta el momento perfecto tras cada servicio y pide reseña automáticamente por WhatsApp. Alerta interna si llega una valoración negativa. Genera más reseñas en Google sin esfuerzo manual.</p>
+  <div class="ag-price">97€/mes</div>
+  <div class="ag-sub">Compatible Google Maps · Idealista · Doctoralia · Treatwell</div>
+</div>
+</div>
+    <div class="ag" data-c="cap" onclick="toggleAg(this)">
+<div class="ag-header">
+  <div class="ag-name"><span class="ag-acc">CO</span>NTENT</div>
+  <span class="ag-toggle">+</span>
+</div>
+<div class="ag-collapsed">
+  <div class="ag-role">Contenido IA para propiedades</div>
+  <div class="ag-live"><span class="ag-dot"></span>Activo 24/7</div>
+  <p class="ag-desc">Analiza las fotos de la propiedad y genera en 60 segundos: descripción para Idealista, caption para Instagram/TikTok, guión de vídeo y email al comprador. Opcional: vídeo automático en MP4.</p>
+  <div class="ag-price">297€/mes</div>
+  <div class="ag-sub">Compatible Idealista · Instagram · TikTok · Creatomate</div>
+</div>
+</div>
+  
+    <!-- NUEVOS SECTORES -->
+    <div class="ag" data-c="cap" onclick="toggleAg(this)">
+<div class="ag-header"><div class="ag-name"><span class="ag-acc">BO</span>OK</div><span class="ag-toggle">+</span></div>
+<div class="ag-collapsed">
+  <div class="ag-role">Citas automáticas 24/7</div>
+  <div class="ag-live"><span class="ag-dot"></span>Activo 24/7</div>
+  <p class="ag-desc">Gestiona reservas y citas por WhatsApp automáticamente. Confirma, recuerda y reagenda sin intervención humana. Para clínicas, estética y cualquier negocio con agenda.</p>
+  <div class="ag-price">197€/mes</div>
+  <div class="ag-sub">Compatible Google Calendar · Clinicalia · Doctoralia</div>
+</div>
+</div>
+    <div class="ag" data-c="operaciones" onclick="toggleAg(this)">
+<div class="ag-header"><div class="ag-name"><span class="ag-acc">DR</span>IVE</div><span class="ag-toggle">+</span></div>
+<div class="ag-collapsed">
+  <div class="ag-role">Gestión autoescuela IA</div>
+  <div class="ag-live"><span class="ag-dot" style="animation-delay:.3s"></span>Activo 24/7</div>
+  <p class="ag-desc">Gestiona reservas de clases, recuerda exámenes, hace seguimiento de alumnos y responde dudas frecuentes automáticamente. Reduce llamadas un 70%.</p>
+  <div class="ag-price">247€/mes</div>
+  <div class="ag-sub">Compatible Google Calendar · WhatsApp Business</div>
+</div>
+</div>
+    <div class="ag" data-c="seg" onclick="toggleAg(this)">
+<div class="ag-header"><div class="ag-name"><span class="ag-acc">TR</span>AIN</div><span class="ag-toggle">+</span></div>
+<div class="ag-collapsed">
+  <div class="ag-role">Captación y retención gym</div>
+  <div class="ag-live"><span class="ag-dot" style="animation-delay:.6s"></span>Activo 24/7</div>
+  <p class="ag-desc">Responde leads de gimnasios y entrenadores, hace seguimiento de bajas, reactiva socios inactivos y gestiona renovaciones automáticamente.</p>
+  <div class="ag-price">197€/mes</div>
+  <div class="ag-sub">ROI promedio: 15x · Compatible Mindbody · Glofox</div>
+</div>
+</div>
+    <div class="ag" data-c="cap" onclick="toggleAg(this)">
+<div class="ag-header"><div class="ag-name"><span class="ag-acc">GL</span>AM</div><span class="ag-toggle">+</span></div>
+<div class="ag-collapsed">
+  <div class="ag-role">Reservas y recordatorios belleza</div>
+  <div class="ag-live"><span class="ag-dot" style="animation-delay:.2s"></span>Activo 24/7</div>
+  <p class="ag-desc">Gestiona reservas de peluquerías y centros de belleza por WhatsApp. Envía recordatorios 24h antes, reduce no-shows un 60% y reactiva clientes inactivos.</p>
+  <div class="ag-price">147€/mes</div>
+  <div class="ag-sub">0€ setup · Activo en 5 días · Compatible Fresha · Treatwell</div>
+</div>
+</div>
+    <div class="ag" data-c="operaciones" onclick="toggleAg(this)">
+<div class="ag-header"><div class="ag-name"><span class="ag-acc">ME</span>CH</div><span class="ag-toggle">+</span></div>
+<div class="ag-collapsed">
+  <div class="ag-role">Presupuestos y citas taller</div>
+  <div class="ag-live"><span class="ag-dot" style="animation-delay:.5s"></span>Activo 24/7</div>
+  <p class="ag-desc">Responde consultas de talleres mecánicos, genera presupuestos orientativos, agenda citas y hace seguimiento post-reparación para fidelizar clientes.</p>
+  <div class="ag-price">197€/mes</div>
+  <div class="ag-sub">Compatible WhatsApp Business · Google Calendar</div>
+</div>
+</div>
+    <div class="ag" data-c="seg" onclick="toggleAg(this)">
+<div class="ag-header"><div class="ag-name"><span class="ag-acc">LE</span>ARN</div><span class="ag-toggle">+</span></div>
+<div class="ag-collapsed">
+  <div class="ag-role">Matriculación y seguimiento academia</div>
+  <div class="ag-live"><span class="ag-dot" style="animation-delay:.4s"></span>Activo 24/7</div>
+  <p class="ag-desc">Cualifica alumnos interesados, gestiona matrículas por WhatsApp, hace seguimiento de abandonos y reactiva leads fríos con secuencias personalizadas.</p>
+  <div class="ag-price">197€/mes</div>
+  <div class="ag-sub">Compatible con cualquier LMS · WhatsApp Business</div>
+</div>
+</div>
+    <div class="ag" data-c="cap" onclick="toggleAg(this)">
+<div class="ag-header"><div class="ag-name"><span class="ag-acc">WE</span>B</div><span class="ag-toggle">+</span></div>
+<div class="ag-collapsed">
+  <div class="ag-role">Web profesional con IA integrada</div>
+  <div class="ag-live"><span class="ag-dot" style="animation-delay:.1s"></span>Servicio único</div>
+  <p class="ag-desc">Diseñamos y desarrollamos tu web profesional con agentes IA integrados desde el día 1. Formularios que abren WhatsApp, respuesta automática de leads, chat IA 24/7 y velocidad máxima. Entrega en 7 días.</p>
+  <div class="ag-price">Desde 997€</div>
+  <div class="ag-sub">Setup único · Sin mensualidad obligatoria · Entrega en 7 días</div>
+</div>
+</div>
+    <div class="ag" data-c="operaciones" onclick="toggleAg(this)">
+<div class="ag-header"><div class="ag-name"><span class="ag-acc">SU</span>PP</div><span class="ag-toggle">+</span></div>
+<div class="ag-collapsed">
+  <div class="ag-role">Soporte técnico IA</div>
+  <div class="ag-live"><span class="ag-dot" style="animation-delay:.2s"></span>Respuesta en 24h</div>
+  <p class="ag-desc">¿Ya tienes IA pero algo no funciona bien? Auditamos, corregimos y optimizamos tus agentes existentes. Ajuste de prompts, corrección de flujos, integración de nuevas herramientas y mantenimiento mensual.</p>
+  <div class="ag-price">Desde 297€/mes</div>
+  <div class="ag-sub">Compatible n8n · Make · Zapier · ChatGPT · Claude · cualquier stack</div>
+</div>
+</div>
+  </div>
+</section>
+
+<!-- 5. A medida + TYPEFORM -->
+<section class="custom" id="medida">
+  <div class="custom-g">
+    <div>
+      <div class="stag rv">Agente a medida</div>
+      <h2 class="sh rv">¿NO ENCUENTRAS<br>LO QUE BUSCAS?<br><span class="shi">Lo creamos.</span></h2>
+      <p class="rv" style="font-size:15px;line-height:2;color:var(--w2);margin-top:24px">Si tienes un proceso específico que quieres automatizar, cuéntanoslo. Diseñamos el agente perfecto para ese problema y lo supervisamos cada mes.</p>
+      <div class="csteps">
+        <div class="cst rv"><div class="cstn">01</div><div><div class="cstt">NOS CUENTAS EL PROBLEMA</div><p class="cstd">5 minutos. Nos dices qué proceso te roba más tiempo o dinero.</p></div></div>
+        <div class="cst rv d1"><div class="cstn">02</div><div><div class="cstt">DISEÑAMOS EL AGENTE</div><p class="cstd">Arquitectura y lógica específica para tu negocio. Te presentamos el diseño antes de construir.</p></div></div>
+        <div class="cst rv d2"><div class="cstn">03</div><div><div class="cstt">LO IMPLANTAMOS</div><p class="cstd">2-3 semanas de construcción. Lo instalamos sin parar tu operativa.</p></div></div>
+        <div class="cst rv d3"><div class="cstn">04</div><div><div class="cstt">LO MEJORAMOS CADA MES</div><p class="cstd">Revisión mensual y nuevas mejoras. El agente evoluciona con tu negocio.</p></div></div>
+      </div>
+    </div>
+    <div class="tf-wrap rv">
+      <div class="tf">
+        <div class="tf-prog"><div class="tf-bar" id="tfBar"></div></div>
+        <div class="tf-head"><div class="tf-lbl" id="tfLbl">CUÉNTANOS TU PROBLEMA</div><div class="tf-cnt" id="tfCnt">1 / 8</div></div>
+        <div class="tf-body" id="tfBody">
+          <div class="tf-step act" data-s="1">
+            <div class="tf-q">¿QUÉ TIPO DE NEGOCIO TIENES?</div>
+            <div class="tf-hint">Selecciona el que mejor describe tu empresa</div>
+            <div class="tf-opts">
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">A</span><span>Inmobiliaria</span></button>
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">B</span><span>Broker hipotecario / financiera</span></button>
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">C</span><span>Clínica / salud / estética</span></button>
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">D</span><span>Asesoría / despacho</span></button>
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">E</span><span>Academia / formación</span></button>
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">F</span><span>Otro tipo de negocio</span></button>
+            </div>
+          </div>
+          <div class="tf-step" data-s="2">
+            <div class="tf-q">¿CUÁL ES TU MAYOR PROBLEMA?</div>
+            <div class="tf-hint">El proceso que más tiempo o dinero te roba</div>
+            <div class="tf-opts">
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">A</span><span>Leads sin responder a tiempo</span></button>
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">B</span><span>Seguimiento manual e inconsistente</span></button>
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">C</span><span>Gestión de documentación tediosa</span></button>
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">D</span><span>Coordinación de citas y visitas</span></button>
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">E</span><span>Captación de nuevos clientes</span></button>
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">F</span><span>Otro proceso repetitivo</span></button>
+            </div>
+          </div>
+          <div class="tf-step" data-s="3">
+            <div class="tf-q">¿CUÁNTAS PERSONAS AFECTADAS?</div>
+            <div class="tf-hint">El equipo que realiza ese proceso actualmente</div>
+            <div class="tf-opts">
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">A</span><span>Solo yo (1 persona)</span></button>
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">B</span><span>2-5 personas</span></button>
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">C</span><span>6-15 personas</span></button>
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">D</span><span>Más de 15 personas</span></button>
+            </div>
+          </div>
+          <div class="tf-step" data-s="4">
+            <div class="tf-q">¿QUÉ HERRAMIENTAS USÁIS?</div>
+            <div class="tf-hint">Puedes seleccionar varias</div>
+            <div class="tf-og">
+              <button class="tf-og-btn" onclick="sm(this)">Gmail / Outlook</button>
+              <button class="tf-og-btn" onclick="sm(this)">WhatsApp Business</button>
+              <button class="tf-og-btn" onclick="sm(this)">Inmovilla / CRM</button>
+              <button class="tf-og-btn" onclick="sm(this)">Idealista / Fotocasa</button>
+              <button class="tf-og-btn" onclick="sm(this)">Google Calendar</button>
+              <button class="tf-og-btn" onclick="sm(this)">Excel / Sheets</button>
+              <button class="tf-og-btn" onclick="sm(this)">Notion / Airtable</button>
+              <button class="tf-og-btn" onclick="sm(this)">Otro CRM</button>
+            </div>
+          </div>
+          <div class="tf-step" data-s="5">
+            <div class="tf-q">¿CUÁNTO TE CUESTA ESTE PROBLEMA?</div>
+            <div class="tf-hint">Estima el impacto mensual aproximado</div>
+            <div class="tf-opts">
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">A</span><span>Tiempo perdido sin impacto económico claro</span></button>
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">B</span><span>Pierdo 1-2 oportunidades/mes (1.000-5.000€)</span></button>
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">C</span><span>Pierdo 3-5 oportunidades/mes (5.000-15.000€)</span></button>
+              <button class="tf-opt" onclick="so(this)"><span class="tf-k">D</span><span>El impacto es mayor o difícil de cuantificar</span></button>
+            </div>
+          </div>
+          <div class="tf-step" data-s="6">
+            <div class="tf-q">DESCRÍBENOS EL PROCESO</div>
+            <div class="tf-hint">Cómo funciona hoy. Cuanto más detalle, mejor agente diseñamos.</div>
+            <textarea class="tf-ta" rows="5" id="tf-proc" placeholder="Ej: Cuando llega un lead de Idealista, alguien del equipo tiene que verlo, llamar al cliente, apuntarlo en Excel y hacer seguimiento cada 2-3 días..."></textarea>
+          </div>
+          <div class="tf-step" data-s="7">
+            <div class="tf-q">¿QUÉ RESULTADO ESPERAS?</div>
+            <div class="tf-hint">¿Qué debería hacer el agente perfecto para ti?</div>
+            <textarea class="tf-ta" rows="4" id="tf-res" placeholder="Ej: Que responda automáticamente a cada lead en menos de 2 minutos con un mensaje personalizado y me avise en Telegram..."></textarea>
+          </div>
+          <div class="tf-step" data-s="8">
+            <div class="tf-q">¿CÓMO TE CONTACTAMOS?</div>
+            <div class="tf-hint">Te enviamos el análisis gratuito en menos de 24 horas</div>
+            <div style="display:flex;flex-direction:column;gap:18px">
+              <div><div style="font-size:11px;color:var(--w2);letter-spacing:1px;margin-bottom:7px">Nombre</div><input class="tf-inp" type="text" id="tf-name" placeholder="Tu nombre"></div>
+              <div><div style="font-size:11px;color:var(--w2);letter-spacing:1px;margin-bottom:7px">Email profesional</div><input class="tf-inp" type="email" id="tf-email" placeholder="hola@tuempresa.com"></div>
+              <div><div style="font-size:11px;color:var(--w2);letter-spacing:1px;margin-bottom:7px">WhatsApp (opcional)</div><input class="tf-inp" type="tel" id="tf-phone" placeholder="+34 600 000 000"></div>
+            </div>
+          </div>
+        </div>
+        <div class="tf-ok" id="tfOk">
+          <div class="tf-ok-ico">⚡</div>
+          <div class="tf-ok-t">¡PERFECTO!</div>
+          <p class="tf-ok-d">Hemos recibido tu solicitud. Ahora te abrimos WhatsApp para hablar directamente y diseñar tu agente perfecto.</p>
+          <a id="tfWa" href="#" target="_blank" class="tf-wa">Abrir WhatsApp →</a>
+        </div>
+        <div class="tf-foot" id="tfFoot">
+          <button class="tf-back" id="tfBack" onclick="tprev()" style="visibility:hidden">← Anterior</button>
+          <button class="tf-next" id="tfNext" onclick="tnext()">Siguiente →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. CÓMO FUNCIONA -->
+<section class="how">
+  <div class="stag rv">Cómo funciona</div>
+  <h2 class="sh rv">IMPLANTADO Y FUNCIONANDO<br><span class="shi">en 7 días.</span></h2>
+  <div class="how-g">
+    <div class="how-c rv"><div class="how-n">01</div><div class="how-ico">◎</div><div class="how-t">DIAGNÓSTICO</div><p class="how-d">Analizamos tu proceso y dónde está perdiendo dinero tu negocio. Sin compromiso ni coste.</p></div>
+    <div class="how-c rv d1"><div class="how-n">02</div><div class="how-ico">⬡</div><div class="how-t">IMPLANTACIÓN</div><p class="how-d">Conectamos los agentes a tus sistemas en 7 días. Tu equipo no aprende nada nuevo — trabajan en segundo plano.</p></div>
+    <div class="how-c rv d2"><div class="how-n">03</div><div class="how-ico">↗</div><div class="how-t">RESULTADOS</div><p class="how-d">En 48h tienes agentes funcionando. En la primera semana, resultados reales con datos de tu negocio.</p></div>
+    <div class="how-c rv d3"><div class="how-n">04</div><div class="how-ico">∞</div><div class="how-t">OPTIMIZACIÓN</div><p class="how-d">Cada mes revisamos, ajustamos y mejoramos. Los agentes evolucionan con tu negocio continuamente.</p></div>
+  </div>
+</section>
+
+<!-- 7. SECTORES -->
+<section class="sectors" id="sectores">
+  <div class="stag rv">Sectores donde trabajamos</div>
+  <h2 class="sh rv">SI TU NEGOCIO TIENE<br>PROCESOS REPETITIVOS,<br><span class="shi">tenemos el agente.</span></h2>
+  <div class="sec-g">
+    <div class="sc rv"><div class="sc-ico">🏠</div><div class="sc-n">INMOBILIARIAS</div><div class="sc-a">ARIA · MATCH · NOVA · RETAIN · FLUX</div><p class="sc-d">Respuesta instantánea de leads, reactivación de compradores dormidos y captación automática de vendedores.</p><span class="sc-b">Entrada preferente</span></div>
+    <div class="sc rv d1"><div class="sc-ico">💰</div><div class="sc-n">BROKERS HIPOTECARIOS</div><div class="sc-a">QUALIF · CALL · DOCS · COMPARE · TRACK</div><p class="sc-d">Pre-cualificación, gestión documental automática y seguimiento bancario sin emails manuales.</p><span class="sc-b">Entrada preferente</span></div>
+    <div class="sc rv d2"><div class="sc-ico">🦷</div><div class="sc-n">CLÍNICAS Y SALUD</div><div class="sc-a">ARIA · BOOK · RETAIN · REVIEW</div><p class="sc-d">Respuesta inmediata a consultas, agenda automática y gestión de reseñas online en tiempo real.</p><span class="sc-b">Próximamente</span></div>
+    <div class="sc rv"><div class="sc-ico">📋</div><div class="sc-n">ASESORÍAS Y DESPACHOS</div><div class="sc-a">QUALIF · DOCS · CALL · REPORT</div><p class="sc-d">Cualificación de clientes, gestión documental y seguimiento de expedientes totalmente automático.</p><span class="sc-b">Próximamente</span></div>
+    <div class="sc rv d1"><div class="sc-ico">📚</div><div class="sc-n">ACADEMIAS HIGH TICKET</div><div class="sc-a">ARIA · QUALIF · FLUX · RETAIN</div><p class="sc-d">Captación de alumnos, cualificación de interesados y seguimiento automatizado hasta matrícula.</p><span class="sc-b">Próximamente</span></div>
+    <div class="sc rv d2"><div class="sc-ico">🦷</div><div class="sc-n">CLÍNICAS Y ESTÉTICA</div><div class="sc-a">BOOK · RETAIN · REVIEW · ARIA</div><p class="sc-d">Citas automáticas 24/7, recordatorios que eliminan no-shows y reactivación de pacientes inactivos.</p><span class="sc-b">Disponible</span></div>
+    <div class="sc rv"><div class="sc-ico">🚗</div><div class="sc-n">AUTOESCUELAS</div><div class="sc-a">DRIVE · BOOK · FLUX · CALL</div><p class="sc-d">Gestión de clases, seguimiento de alumnos, recordatorio de exámenes y respuesta automática de consultas.</p><span class="sc-b">Disponible</span></div>
+    <div class="sc rv d1"><div class="sc-ico">💪</div><div class="sc-n">GIMNASIOS Y ENTRENADORES</div><div class="sc-a">TRAIN · RETAIN · ARIA · REVIEW</div><p class="sc-d">Captación de socios, reactivación de bajas, gestión de renovaciones y seguimiento personalizado.</p><span class="sc-b">Disponible</span></div>
+    <div class="sc rv d2"><div class="sc-ico">💇</div><div class="sc-n">PELUQUERÍAS Y BELLEZA</div><div class="sc-a">GLAM · BOOK · REVIEW · RETAIN</div><p class="sc-d">Reservas por WhatsApp, recordatorios automáticos, reducción de no-shows y fidelización de clientes.</p><span class="sc-b">Disponible</span></div>
+    <div class="sc rv"><div class="sc-ico">🔧</div><div class="sc-n">TALLERES MECÁNICOS</div><div class="sc-a">MECH · BOOK · RETAIN · REVIEW</div><p class="sc-d">Presupuestos orientativos automáticos, agenda de citas y seguimiento post-reparación para fidelizar.</p><span class="sc-b">Disponible</span></div>
+    <div class="sc rv d1"><div class="sc-ico">📚</div><div class="sc-n">ACADEMIAS Y FORMACIÓN</div><div class="sc-a">LEARN · QUALIF · FLUX · RETAIN</div><p class="sc-d">Captación de alumnos, matrículas automáticas por WhatsApp y recuperación de leads abandonados.</p><span class="sc-b">Disponible</span></div>
+    <div class="sc rv d2"><div class="sc-ico">⚡</div><div class="sc-n">TU SECTOR</div><div class="sc-a">Agente a medida</div><p class="sc-d">Si tu sector no aparece aquí, cuéntanos tu problema. Diseñamos el agente perfecto para tu proceso.</p><span class="sc-b">A medida</span></div>
+  </div>
+</section>
+
+<!-- 8. PRICING -->
+<section class="pricing" id="precios">
+  <div class="stag rv">Planes y precios</div>
+  <h2 class="sh rv">EMPIEZA CON UN AGENTE.<br><span class="shi">Escala cuando quieras.</span></h2>
+  <div class="pri-g">
+    <div class="plan rv">
+      <div class="plan-tag">Para empezar</div>
+      <div class="plan-n">STARTER</div>
+      <p class="plan-d">1-2 agentes del catálogo. El 80% del impacto con el mínimo compromiso.</p>
+      <div class="plan-p">497€</div>
+      <div class="plan-per">/mes · 750€ setup · 3 meses mínimo</div>
+      <div class="plan-fs">
+        <div class="plan-f"><span class="fok">✓</span>1-2 agentes activos 24/7</div>
+        <div class="plan-f"><span class="fok">✓</span>Implantación en 7 días</div>
+        <div class="plan-f"><span class="fok">✓</span>Personalización inicial</div>
+        <div class="plan-f"><span class="fok">✓</span>Panel básico de métricas</div>
+        <div class="plan-f"><span class="fok">✓</span>Revisión mensual incluida</div>
+      </div>
+      <a href="https://wa.me/34684376027?text=Hola%2C%20me%20interesa%20el%20Plan%20Starter%20de%20Veloxia%20(497%E2%82%AC%2Fmes)." class="plan-cta" target="_blank">Empezar con Starter →</a>
+    </div>
+    <div class="plan feat rv d1">
+      <div class="plan-tag">Más vendido</div>
+      <div class="plan-n">PRO</div>
+      <p class="plan-d">3-5 agentes conectados. Sistema completo para inmobiliarias y brokers.</p>
+      <div class="plan-p">1.200€</div>
+      <div class="plan-per">/mes · 2.000€ setup · 6 meses mínimo</div>
+      <div class="plan-fs">
+        <div class="plan-f"><span class="fok">✓</span>3-5 agentes conectados</div>
+        <div class="plan-f"><span class="fok">✓</span>Panel completo con KPIs</div>
+        <div class="plan-f"><span class="fok">✓</span>Revisión quincenal</div>
+        <div class="plan-f"><span class="fok">✓</span>Optimización continua</div>
+        <div class="plan-f"><span class="fok">✓</span>Nuevos agentes incluidos</div>
+      </div>
+      <a href="https://wa.me/34684376027?text=Hola%2C%20me%20interesa%20el%20Plan%20Pro%20de%20Veloxia%20(1.200%E2%82%AC%2Fmes)." class="plan-cta" target="_blank">Empezar con Pro →</a>
+    </div>
+    <div class="plan rv d2">
+      <div class="plan-tag">Para franquicias</div>
+      <div class="plan-n">ELITE</div>
+      <p class="plan-d">Sistema completo gestionado. Dirección externa de IA para grupos y redes.</p>
+      <div class="plan-p">2.500€</div>
+      <div class="plan-per">/mes · 5.000€ setup · 6 meses mínimo</div>
+      <div class="plan-fs">
+        <div class="plan-f"><span class="fok">✓</span>Sistema multiagente completo</div>
+        <div class="plan-f"><span class="fok">✓</span>Personalización por oficina</div>
+        <div class="plan-f"><span class="fok">✓</span>Consultoría estratégica</div>
+        <div class="plan-f"><span class="fok">✓</span>Reporting ejecutivo</div>
+        <div class="plan-f"><span class="fok">✓</span>Account manager dedicado</div>
+      </div>
+      <a href="https://wa.me/34684376027?text=Hola%2C%20me%20interesa%20el%20Plan%20Elite%20de%20Veloxia%20(2.500%E2%82%AC%2Fmes)." class="plan-cta" target="_blank">Empezar con Elite →</a>
+    </div>
+    <div class="plan-custom rv">
+      <div><div class="pcrt">¿NECESITAS UN AGENTE A MEDIDA?</div><p class="pcrd">Si tu problema no encaja en ningún plan estándar, diseñamos el agente exacto. Setup desde 1.500€ · Mensual desde 397€ según complejidad.</p></div>
+      <a href="#medida" class="pcrb">Cuéntanos tu problema →</a>
+    </div>
+    <div class="plan-custom rv" style="border-top:1px solid rgba(196,146,42,.08);background:var(--k3)">
+      <div>
+        <div class="pcrt">🔧 ¿YA TIENES IA Y NECESITAS SOPORTE?</div>
+        <p class="pcrd">Auditamos y corregimos tus agentes existentes. Compatible con n8n, Make, Zapier, ChatGPT o cualquier stack. Ajuste de prompts, flujos rotos e integraciones fallidas. Desde 297€/mes · Respuesta en 24h.</p>
+      </div>
+      <a href="https://wa.me/34684376027?text=Hola%2C%20ya%20tengo%20IA%20pero%20necesito%20soporte%20t%C3%A9cnico.%20%C2%BFPod%C3%A9is%20ayudarme%3F" class="pcrb" target="_blank">Solicitar soporte →</a>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE HAYUK -->
+<section class="about" id="hayuk" style="background:var(--k2)">
+  <div class="about-g">
+    <div>
+      <div class="stag rv">El fundador</div>
+      <h2 class="sh rv" style="margin-bottom:24px">CONSTRUIDO POR<br>ALGUIEN QUE<br><span class="shi">lo vivió desde dentro.</span></h2>
+      <p class="abp rv">Veloxia no nació en una oficina de tecnología. Nació en el día a día de un broker hipotecario que vio cómo se perdían leads cada noche, cómo los expedientes se atascaban en el seguimiento manual y cómo los clientes firmaban con la competencia porque nadie los llamó a tiempo.</p>
+      <p class="abp rv">Esa experiencia real es la que diferencia a Veloxia. Cada agente está diseñado conociendo el problema desde dentro — no desde suposiciones.</p>
+      <div class="diffs">
+        <div class="diff rv d1"><div class="diff-ico">◎</div><div><div class="diff-t">BROKER HIPOTECARIO</div><div class="diff-d">Años gestionando expedientes, visitas y leads en el sector inmobiliario y financiero en España.</div></div></div>
+        <div class="diff rv d2"><div class="diff-ico">◎</div><div><div class="diff-t">CONSTRUCTOR DE AGENTES</div><div class="diff-d">Aprendió a construir IA aplicada a negocios reales. Cada agente de Veloxia viene de un problema real vivido en primera persona.</div></div></div>
+        <div class="diff rv d3"><div class="diff-ico">◎</div><div><div class="diff-t">BUILD IN PUBLIC</div><div class="diff-d">Documenta todo el proceso en TikTok e Instagram. Síguele para ver cómo se construye Veloxia desde cero.</div></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="founder rv">
+        <div class="ftop">
+          <div class="fav">H</div>
+          <div><div class="fname">Hayuk</div><div class="frole">Fundador · Veloxia</div><div class="falso">Broker hipotecario · Finanhogar</div></div>
+        </div>
+        <blockquote class="fquote">"Vi cómo las inmobiliarias perdían leads cada noche. Vi cómo los brokers pasaban horas persiguiendo documentación. Vi cómo compradores con intención real desaparecían porque nadie los llamó a tiempo.<br><br>Construí Veloxia para resolver eso. No como ejercicio tecnológico — sino porque lo viví desde dentro y sabía exactamente qué había que automatizar."</blockquote>
+        <div class="fstats">
+          <div class="fst"><div class="fstn">32</div><div class="fstl">Agentes construidos</div></div>
+          <div class="fst"><div class="fstn">2+</div><div class="fstl">Años en el sector</div></div>
+          <div class="fst"><div class="fstn">30x</div><div class="fstl">ROI máximo</div></div>
+        </div>
+      </div>
+      <div class="vision rv d1">
+        <div class="vis-tag">Sígueme</div>
+        <div class="vis-t">Construyendo Veloxia en público.</div>
+        <p class="vis-d">TikTok, Instagram y LinkedIn — documento todo el proceso de construir una agencia de IA desde cero. Casos reales, demos en vivo y aprendizajes del sector.</p>
+        <a href="https://wa.me/34684376027?text=Hola%20Hayuk%2C%20quiero%20saber%20m%C3%A1s%20sobre%20Veloxia." class="vis-cta" target="_blank">Hablar con Hayuk →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. REDES SOCIALES -->
+<section class="social" id="redes">
+  <div class="soc-g">
+    <div>
+      <div class="stag rv">Síguenos</div>
+      <h2 class="sh rv">CONTENIDO DIARIO<br>SOBRE <span class="shi">agentes IA.</span></h2>
+      <p class="rv" style="font-size:15px;line-height:2;color:var(--w2);margin-top:24px;margin-bottom:36px">Documentamos todo el proceso en público. Casos reales, demos de agentes en vivo y todo lo que aprendemos sobre IA aplicada a negocios reales en España.</p>
+      <div class="diff rv" style="background:var(--k3)">
+        <div class="diff-ico">◎</div>
+        <div><div class="diff-t">PARA DIRECTORES, BROKERS Y EMPRESARIOS</div><div class="diff-d">Contenido práctico sobre cómo la IA puede transformar tu negocio sin necesitar un equipo técnico.</div></div>
+      </div>
+    </div>
+    <div class="soc-cards">
+      <a href="https://www.instagram.com/veloxia.agency" target="_blank" class="soc-c rv"><div class="soc-ico sig">📸</div><div class="soc-info"><div class="soc-h">@veloxia.agency</div><div class="soc-d">Instagram · Demos en vivo · Casos de éxito</div><div class="soc-b">Síguenos en Instagram</div></div><span class="soc-arr">→</span></a>
+      <a href="https://www.tiktok.com/@veloxia.agentes.i" target="_blank" class="soc-c rv d1"><div class="soc-ico stk">🎵</div><div class="soc-info"><div class="soc-h">@veloxia</div><div class="soc-d">TikTok · Agentes en acción · Contenido diario</div><div class="soc-b">Síguenos en TikTok</div></div><span class="soc-arr">→</span></a>
+      <a href="https://www.linkedin.com/company/veloxia" target="_blank" class="soc-c rv d2"><div class="soc-ico sli">💼</div><div class="soc-info"><div class="soc-h">Veloxia</div><div class="soc-d">LinkedIn · Estrategia · Sector inmobiliario</div><div class="soc-b">Síguenos en LinkedIn</div></div><span class="soc-arr">→</span></a>
+      <a href="https://wa.me/34684376027?text=Hola%2C%20quiero%20m%C3%A1s%20info%20sobre%20Veloxia." target="_blank" class="soc-c rv d3" style="border-color:rgba(37,211,102,.2)"><div class="soc-ico swa">💬</div><div class="soc-info"><div class="soc-h">WhatsApp directo</div><div class="soc-d">Habla con Hayuk · Respuesta en minutos</div><div class="soc-b">+34 684 376 027</div></div><span class="soc-arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- 10. TESTIMONIOS -->
+<section class="proof">
+  <div class="stag rv">Resultados reales</div>
+  <h2 class="sh rv">LO QUE DICEN LOS NEGOCIOS<br><span class="shi">con agentes activos.</span></h2>
+  <div class="pr-g">
+    <div class="pr-c rv"><div class="pr-stars">★★★★★</div><p class="pr-q">"ARIA respondió a un lead a las 11pm que yo nunca habría visto hasta el día siguiente. Esa operación sola pagó 6 meses del servicio."</p><div class="pr-by"><div class="pr-av">M</div><div><div class="pr-n">María González</div><div class="pr-r">Directora · Inmobiliaria Levante</div></div></div></div>
+    <div class="pr-c rv d1"><div class="pr-stars">★★★★★</div><p class="pr-q">"CALL me dice cada mañana exactamente a quién llamar y qué decirle. Cierro el doble de expedientes con la mitad del esfuerzo."</p><div class="pr-by"><div class="pr-av">J</div><div><div class="pr-n">Javier Moreno</div><div class="pr-r">Broker · Finanhogar Madrid</div></div></div></div>
+    <div class="pr-c rv d2"><div class="pr-stars">★★★★★</div><p class="pr-q">"MATCH reactivó un comprador de hace 3 meses con una captación nueva. Cerramos en 10 días. Nunca habríamos conectado esos puntos."</p><div class="pr-by"><div class="pr-av">A</div><div><div class="pr-n">Ana Martínez</div><div class="pr-r">Franquiciada · Hogares Inmobiliaria</div></div></div></div>
+  </div>
+</section>
+
+<!-- 11. FAQ -->
+<section class="faq" id="faq">
+  <div class="faq-lay">
+    <div class="faq-l">
+      <div class="stag rv">FAQ</div>
+      <h2 class="sh rv">TODO LO QUE<br>NECESITAS<br><span class="shi">saber.</span></h2>
+      <p class="faq-note rv">¿Más dudas? Escríbenos a hola@veloxia.agency</p>
+    </div>
+    <div class="rv">
+      <div class="fi"><div class="fi-q">¿En qué se diferencia de una automatización? <span class="fi-plus">+</span></div><div class="fi-a">Una automatización sigue reglas fijas. Nuestros agentes razonan con IA, entienden el contexto y se adaptan. La diferencia es como entre un semáforo y un conductor.</div></div>
+      <div class="fi"><div class="fi-q">¿Cuánto tarda la implantación? <span class="fi-plus">+</span></div><div class="fi-a">Los agentes del catálogo se implantan en 5-7 días. Los agentes a medida tardan 2-3 semanas. En ningún caso tienes que parar tu operativa actual.</div></div>
+      <div class="fi"><div class="fi-q">¿Los agentes suenan como bots? <span class="fi-plus">+</span></div><div class="fi-a">No. Los mensajes están generados por IA y entrenados para sonar completamente humanos, mencionando el contexto específico de cada conversación. El 95% no sabe que es IA.</div></div>
+      <div class="fi"><div class="fi-q">¿Qué pasa si tengo un proceso muy específico? <span class="fi-plus">+</span></div><div class="fi-a">Es el caso ideal para un agente a medida. Rellena el formulario, nos cuentas el proceso y diseñamos la solución exacta. Muchos de nuestros mejores agentes nacieron así.</div></div>
+      <div class="fi"><div class="fi-q">¿Puedo cancelar cuando quiera? <span class="fi-plus">+</span></div><div class="fi-a">Hay permanencia mínima de 3-6 meses según el plan. Después de eso, mes a mes sin compromiso. Si cancelas, te entregamos todos tus datos.</div></div>
+      <div class="fi"><div class="fi-q">¿Cómo mido si los agentes funcionan? <span class="fi-plus">+</span></div><div class="fi-a">Cada mes recibes un informe con métricas reales: leads respondidos, tiempo de respuesta, tasa de conversión y ROI estimado. Todo visible en tiempo real en tu panel.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12. CTA FINAL -->
+<section class="final" id="contacto">
+  <div class="final-bg">VELOXIA</div>
+  <span class="final-tag rv">Demo gratuita · 30 minutos · Sin compromiso</span>
+  <h2 class="final-h rv">¿CUÁL ES EL PROCESO<br>QUE MÁS TIEMPO<br><span class="final-hg">TE ROBA CADA DÍA?</span></h2>
+  <p class="final-sub rv">Cuéntanoslo en 30 minutos. Te mostramos el agente perfecto<br>del catálogo o lo diseñamos desde cero para ti.</p>
+  <p class="final-note rv">Sin permanencia inicial · Demo gratuita · Sin compromiso</p>
+  <div class="final-form rv">
+    <input class="final-inp" type="email" id="finEmail" placeholder="Tu email profesional">
+    <button class="final-btn" onclick="openWA()">Solicitar demo →</button>
+  </div>
+  <div class="compat rv">
+    <span class="compat-l">Compatible con</span>
+    <span class="compat-sep"></span>
+    <span class="compat-n">Idealista</span>
+    <span class="compat-n">Inmovilla</span>
+    <span class="compat-n">WhatsApp Business</span>
+    <span class="compat-n">Gmail · Outlook</span>
+    <span class="compat-n">Airtable</span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">VELOXIA<span class="f-dot">.</span></div>
+  <div class="f-links">
+    <a href="#nosotros">Nosotros</a>
+    <a href="#catalogo">Catálogo</a>
+    <a href="#medida">A medida</a>
+    <a href="#sectores">Sectores</a>
+    <a href="#precios">Precios</a>
+    <a href="#redes">Redes</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+  <div class="f-soc">
+    <a href="https://www.instagram.com/veloxia.agency" target="_blank" class="fsi">📸</a>
+    <a href="https://www.tiktok.com/@veloxia.agentes.i" target="_blank" class="fsi">🎵</a>
+    <a href="https://www.linkedin.com/company/veloxia" target="_blank" class="fsi">💼</a>
+    <a href="https://wa.me/34684376027" target="_blank" class="fsi">💬</a>
+  </div>
+  <div class="f-copy">© 2025 Veloxia · veloxia.agency · hola@veloxia.agency</div>
+</footer>
+
+<script>
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
+let mx=0,my=0,cx=0,cy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function loop(){cx+=(mx-cx)*.11;cy+=(my-cy)*.11;cur2.style.left=cx+'px';cur2.style.top=cy+'px';requestAnimationFrame(loop)})();
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('s',scrollY>60),{passive:true});
+const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('on'),i*65)});},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+document.querySelectorAll('.fi').forEach(item=>{item.querySelector('.fi-q').addEventListener('click',()=>{const o=item.classList.contains('open');document.querySelectorAll('.fi').forEach(i=>i.classList.remove('open'));if(!o)item.classList.add('open')})});
+function filt(c,btn){document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('act'));btn.classList.add('act');document.querySelectorAll('.ag').forEach(a=>{a.style.display=(c==='all'||a.dataset.c===c)?'block':'none'})}
+function toggleAg(el){
+  const wasOpen=el.classList.contains('open');
+  document.querySelectorAll('.ag.open').forEach(a=>a.classList.remove('open'));
+  if(!wasOpen)el.classList.add('open');
+}
+let step=1;const tot=8;
+const lbls=['CUÉNTANOS TU PROBLEMA','EL PROBLEMA PRINCIPAL','TU EQUIPO','HERRAMIENTAS ACTUALES','IMPACTO ECONÓMICO','EL PROCESO ACTUAL','EL RESULTADO ESPERADO','TUS DATOS DE CONTACTO'];
+function utf(){document.getElementById('tfBar').style.width=(step/tot*100)+'%';document.getElementById('tfCnt').textContent=step+' / '+tot;document.getElementById('tfLbl').textContent=lbls[step-1];document.getElementById('tfBack').style.visibility=step>1?'visible':'hidden';document.getElementById('tfNext').textContent=step===tot?'Enviar ✓':'Siguiente →';document.querySelectorAll('.tf-step').forEach(s=>s.classList.remove('act'));const a=document.querySelector('[data-s="'+step+'"]');if(a)a.classList.add('act')}
+function tnext(){
+  if(step===tot){
+    const n=document.getElementById('tf-name')?document.getElementById('tf-name').value:'';
+    const p=document.getElementById('tf-proc')?document.getElementById('tf-proc').value:'';
+    const r=document.getElementById('tf-res')?document.getElementById('tf-res').value:'';
+    let m='Hola%2C%20vengo%20desde%20veloxia.agency%20y%20quiero%20un%20agente%20a%20medida.';
+    if(n)m+='%0ANombre%3A%20'+encodeURIComponent(n);
+    if(p)m+='%0AProceso%3A%20'+encodeURIComponent(p.substring(0,200));
+    if(r)m+='%0AResultado%3A%20'+encodeURIComponent(r.substring(0,150));
+    const wa='https://wa.me/34684376027?text='+m;
+    document.getElementById('tfWa').href=wa;
+    document.getElementById('tfBody').style.display='none';
+    document.getElementById('tfFoot').style.display='none';
+    document.querySelector('.tf-head').style.display='none';
+    document.querySelector('.tf-prog').style.display='none';
+    document.getElementById('tfOk').classList.add('show');
+    setTimeout(()=>window.open(wa,'_blank'),1500);return;
+  }
+  step++;utf();
+}
+function tprev(){if(step>1){step--;utf()}}
+function so(btn){const s=btn.closest('.tf-step');s.querySelectorAll('.tf-opt').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');setTimeout(()=>tnext(),320)}
+function sm(btn){btn.classList.toggle('sel')}
+function openWA(){const e=document.getElementById('finEmail').value;let m='Hola%2C%20quiero%20una%20demo%20gratuita%20de%20Veloxia.';if(e)m+='%20Email%3A%20'+encodeURIComponent(e);window.open('https://wa.me/34684376027?text='+m,'_blank')}
+const canvas=document.getElementById('canvas');const ctx=canvas.getContext('2d');let W,H,pts=[];
+function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight}
+resize();window.addEventListener('resize',resize);
+class P{constructor(){this.r()}r(){this.x=Math.random()*W;this.y=Math.random()*H;this.s=Math.random()*.7+.2;this.vx=(Math.random()-.5)*.12;this.vy=(Math.random()-.5)*.12;this.o=Math.random()*.3+.07}u(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W||this.y<0||this.y>H)this.r()}d(){ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fillStyle='rgba(196,146,42,'+this.o+')';ctx.fill()}}
+for(let i=0;i<100;i++)pts.push(new P());
+(function loop(){ctx.clearRect(0,0,W,H);pts.forEach(p=>{p.u();p.d()});pts.forEach((p,i)=>pts.slice(i+1).forEach(p2=>{const d=Math.hypot(p.x-p2.x,p.y-p2.y);if(d<90){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p2.x,p2.y);ctx.strokeStyle='rgba(196,146,42,'+(0.05*(1-d/90))+')';ctx.lineWidth=.4;ctx.stroke()}}));requestAnimationFrame(loop)})();
+</script>
+</body>
+</html>
